@@ -1,7 +1,11 @@
 package parkinglot.servlets;
 
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.servlet.annotation.HttpMethodConstraint;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "Cars", value = "/Cars")
+@DeclareRoles({"READ_CARS", "WRITE_CARS"})
+@ServletSecurity(
+        value = @HttpConstraint(rolesAllowed = {"READ_CARS"}),
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_CARS"})
+        }
+)
 public class Cars extends HttpServlet {
 
     @Inject
@@ -31,7 +42,6 @@ public class Cars extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
     }
 
-    // ADAUGĂ ACEASTĂ METODĂ NOUĂ
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

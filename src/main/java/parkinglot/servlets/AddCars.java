@@ -2,6 +2,8 @@ package parkinglot.servlets;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "AddCars", value = "/AddCar")
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"WRITE_CARS"}))
 public class AddCars extends HttpServlet {
 
     @Inject
