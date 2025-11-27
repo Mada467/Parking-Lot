@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // ← SCHIMBAT DIN SEQUENCE ÎN IDENTITY
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -22,10 +22,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    public String getPassword() {
-        return password;
-    }
-
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
     private List<Car> cars = new ArrayList<>();
 
@@ -35,6 +31,10 @@ public class User {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -64,5 +64,4 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
 }

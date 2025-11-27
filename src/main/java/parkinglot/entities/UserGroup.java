@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class UserGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // ← SCHIMBAT DIN AUTO ÎN IDENTITY
     private Long id;
 
     private String username;
