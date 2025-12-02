@@ -6,7 +6,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import parkinglot.common.CarDto;
+import parkinglot.common.CarPhotoDto;
 import parkinglot.entities.Car;
+import parkinglot.entities.CarPhoto;
 import parkinglot.entities.User;
 
 import java.util.ArrayList;
@@ -82,7 +84,6 @@ public class CarsBean {
         car.setOwner(newOwner);
     }
 
-    // METODĂ NOUĂ
     public void deleteCarsByIds(List<Long> carIds) {
         LOG.info("deleteCarsByIds");
 
@@ -98,5 +99,40 @@ public class CarsBean {
             // Șterge mașina din baza de date
             entityManager.remove(car);
         }
+    }
+
+    // METODELE NOI PENTRU PHOTOS
+    public void addPhotoToCar(Long carId, String filename, String fileType, byte[] fileContent) {
+        LOG.info("addPhotoToCar");
+        CarPhoto photo = new CarPhoto();
+        photo.setFilename(filename);
+        photo.setFileType(fileType);
+        photo.setFileContent(fileContent);
+
+        Car car = entityManager.find(Car.class, carId);
+
+        // Dacă mașina are deja o poză, o ștergem
+        if (car.getPhoto() != null) {
+            entityManager.remove(car.getPhoto());
+        }
+
+        car.setPhoto(photo);
+        photo.setCar(car);
+        entityManager.persist(photo);
+    }
+
+    public CarPhotoDto findPhotoByCarId(Long carId) {
+        LOG.info("findPhotoByCarId");
+        List<CarPhoto> photos = entityManager
+                .createQuery("SELECT p FROM CarPhoto p WHERE p.car.id = :id", CarPhoto.class)
+                .setParameter("id", carId)
+                .getResultList();
+
+        if (photos.isEmpty()) {
+            return null;
+        }
+
+        CarPhoto photo = photos.get(0);
+        return new CarPhotoDto(photo.getId(), photo.getFilename(), photo.getFileType(), photo.getFileContent());
     }
 }

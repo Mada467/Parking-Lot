@@ -14,15 +14,23 @@ public class Car {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    public Long getId() {
-        return id;
-    }
-
     @Column(name = "parking_spot")
     private String parkingSpot;
 
     @Column(name = "license_plate")
     private String licensePlate;
+
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CarPhoto photo;
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getOwner() {
         return owner;
@@ -48,8 +56,11 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public CarPhoto getPhoto() {
+        return photo;
     }
 
+    public void setPhoto(CarPhoto photo) {
+        this.photo = photo;
+    }
 }

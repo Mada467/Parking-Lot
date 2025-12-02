@@ -20,15 +20,16 @@
 
             <div class="table-responsive mt-3">
                 <table class="table table-striped">
-                    <thead >
+                    <thead>
                     <tr>
                         <!-- COLOANA SELECT - doar dacă ai WRITE_CARS -->
                         <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                            <th scope ="col">Select</th>
+                            <th scope="col">Select</th>
                         </c:if>
                         <th scope="col">License Plate</th>
                         <th scope="col">Parking Spot</th>
                         <th scope="col">Owner</th>
+                        <th scope="col">Photo</th>
                         <!-- COLOANA ACTIONS - doar dacă ai WRITE_CARS -->
                         <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
                             <th scope="col">Actions</th>
@@ -47,10 +48,18 @@
                             <td>${car.licensePlate}</td>
                             <td>${car.parkingSpot}</td>
                             <td>${car.ownerName}</td>
-                            <!-- BUTONUL EDIT - doar dacă ai WRITE_CARS -->
+                            <td>
+                                <img src="${pageContext.request.contextPath}/CarPhotos?id=${car.id}"
+                                     alt="Car Photo"
+                                     width="100"
+                                     height="75"
+                                     style="object-fit: cover;">
+                            </td>
+                            <!-- BUTONUL EDIT și ADD PHOTO - doar dacă ai WRITE_CARS -->
                             <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
                                 <td>
                                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+                                    <a class="btn btn-warning mt-2" href="${pageContext.request.contextPath}/AddCarPhoto?id=${car.id}">Add Photo</a>
                                 </td>
                             </c:if>
                         </tr>
