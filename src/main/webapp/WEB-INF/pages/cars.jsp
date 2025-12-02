@@ -20,11 +20,11 @@
 
             <div class="table-responsive mt-3">
                 <table class="table table-striped">
-                    <thead>
+                    <thead >
                     <tr>
                         <!-- COLOANA SELECT - doar dacă ai WRITE_CARS -->
                         <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                            <th scope="col">Select</th>
+                            <th scope ="col">Select</th>
                         </c:if>
                         <th scope="col">License Plate</th>
                         <th scope="col">Parking Spot</th>

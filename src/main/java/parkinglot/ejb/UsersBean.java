@@ -70,4 +70,20 @@ public class UsersBean {
             entityManager.persist(userGroup);
         }
     }
+
+    public List<String> findUsernamesByUserIds(Collection<Long> userIds) {
+        LOG.info("findUsernamesByUserIds");
+
+        if (userIds == null || userIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        TypedQuery<String> query = entityManager.createQuery(
+                "SELECT u.username FROM User u WHERE u.id IN :userIds",
+                String.class
+        );
+        query.setParameter("userIds", userIds);
+
+        return query.getResultList();
+    }
 }
