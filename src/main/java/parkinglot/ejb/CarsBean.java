@@ -101,7 +101,7 @@ public class CarsBean {
         }
     }
 
-    // METODELE NOI PENTRU PHOTOS
+    // METODĂ PENTRU ADĂUGARE POZĂ
     public void addPhotoToCar(Long carId, String filename, String fileType, byte[] fileContent) {
         LOG.info("addPhotoToCar");
         CarPhoto photo = new CarPhoto();
@@ -111,9 +111,11 @@ public class CarsBean {
 
         Car car = entityManager.find(Car.class, carId);
 
-        // Dacă mașina are deja o poză, o ștergem
+        // Dacă mașina are deja o poză, o ștergem mai întâi
         if (car.getPhoto() != null) {
-            entityManager.remove(car.getPhoto());
+            CarPhoto oldPhoto = car.getPhoto();
+            car.setPhoto(null);
+            entityManager.remove(oldPhoto);
         }
 
         car.setPhoto(photo);
@@ -121,6 +123,19 @@ public class CarsBean {
         entityManager.persist(photo);
     }
 
+    // METODĂ PENTRU ȘTERGERE POZĂ
+    public void deleteCarPhoto(Long carId) {
+        LOG.info("deleteCarPhoto");
+        Car car = entityManager.find(Car.class, carId);
+
+        if (car.getPhoto() != null) {
+            CarPhoto photo = car.getPhoto();
+            car.setPhoto(null);
+            entityManager.remove(photo);
+        }
+    }
+
+    // METODĂ PENTRU GĂSIRE POZĂ
     public CarPhotoDto findPhotoByCarId(Long carId) {
         LOG.info("findPhotoByCarId");
         List<CarPhoto> photos = entityManager
@@ -135,4 +150,5 @@ public class CarsBean {
         CarPhoto photo = photos.get(0);
         return new CarPhotoDto(photo.getId(), photo.getFilename(), photo.getFileType(), photo.getFileContent());
     }
+
 }

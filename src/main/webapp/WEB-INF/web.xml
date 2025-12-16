@@ -3,6 +3,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Public Registration</web-resource-name>
+            <url-pattern>/AddUser</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Cars</web-resource-name>
+            <url-pattern>/Cars</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>READ_CARS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Users</web-resource-name>
+            <url-pattern>/Users</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>READ_USERS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>jdbcRealmParkingLot</realm-name>
@@ -11,4 +39,18 @@
             <form-error-page>/Login</form-error-page>
         </form-login-config>
     </login-config>
+
+    <security-role>
+        <role-name>READ_CARS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>READ_USERS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>WRITE_CARS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>WRITE_USERS</role-name>
+    </security-role>
+
 </web-app>

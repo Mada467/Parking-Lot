@@ -10,11 +10,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link
-                       ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf("/"))
-    eq '/about.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/about.jsp">About</a>
-                    </li>
                     <c:if test="${pageContext.request.isUserInRole('READ_CARS')}">
                         <li class="nav-item">
                             <a class="nav-link
@@ -33,11 +28,18 @@
                 <ul class="navbar-nav">
                     <c:choose>
                         <c:when test="${pageContext.request.getRemoteUser() == null}">
+
+                            <%-- Secțiune pentru înregistrare (Add User) și Login --%>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-light me-2" href="${pageContext.request.contextPath}/AddUser">Add User</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
                             </li>
                         </c:when>
                         <c:otherwise>
+
+                            <%-- Secțiune pentru Logout --%>
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout (${pageContext.request.getRemoteUser()})</a>
                             </li>

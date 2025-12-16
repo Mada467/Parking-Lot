@@ -3,7 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:pageTemplate pageTitle="Add User">
-    <h1>Add User</h1>
+
+    <%-- Titlul se schimba in functie de cine acceseaza --%>
+    <c:choose>
+        <c:when test="${pageContext.request.remoteUser != null}">
+            <h1>Add User (Admin)</h1>
+        </c:when>
+        <c:otherwise>
+            <h1>Create Account</h1>
+        </c:otherwise>
+    </c:choose>
+
     <form method="POST" action="${pageContext.request.contextPath}/AddUser">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -17,6 +27,8 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
+
+            <%-- Secțiunea User Groups este ÎNTOTDEAUNA vizibilă, conform cerinței --%>
         <div class="mb-3">
             <label class="form-label">User Groups</label>
             <c:forEach var="userGroup" items="${userGroups}">
@@ -28,6 +40,15 @@
                 </div>
             </c:forEach>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+
+        <c:choose>
+            <c:when test="${pageContext.request.remoteUser != null}">
+                <button type="submit" class="btn btn-primary">Save User</button>
+            </c:when>
+            <c:otherwise>
+                <button type="submit" class="btn btn-success">Create Account</button>
+            </c:otherwise>
+        </c:choose>
+
     </form>
 </t:pageTemplate>

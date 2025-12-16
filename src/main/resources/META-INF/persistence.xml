@@ -9,6 +9,7 @@
 
         <class>parkinglot.entities.User</class>
         <class>parkinglot.entities.Car</class>
+        <class>parkinglot.entities.CarPhoto</class>
 
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action"

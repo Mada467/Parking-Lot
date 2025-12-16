@@ -55,11 +55,12 @@
                                      height="75"
                                      style="object-fit: cover;">
                             </td>
-                            <!-- BUTONUL EDIT și ADD PHOTO - doar dacă ai WRITE_CARS -->
+                            <!-- BUTOANELE EDIT, ADD PHOTO și DELETE PHOTO - doar dacă ai WRITE_CARS -->
                             <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
                                 <td>
                                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
                                     <a class="btn btn-warning mt-2" href="${pageContext.request.contextPath}/AddCarPhoto?id=${car.id}">Add Photo</a>
+                                    <a class="btn btn-danger mt-2" href="${pageContext.request.contextPath}/DeleteCarPhoto?id=${car.id}">Delete Photo</a>
                                 </td>
                             </c:if>
                         </tr>
